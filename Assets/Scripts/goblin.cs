@@ -26,12 +26,15 @@ public class goblin : MonoBehaviour
 
     void attack()
     {
+        if(death)
+            return;
+        
         float distance = Vector3.Distance(transform.position, gandalf.transform.position)-15;
-        Debug.Log(distance);
+        
         anim.SetBool("run", distance > 1 && distance < 45);
         anim.SetBool("kick", distance < 1);
 
-        if (distance > 1 && distance < 45)
+        if (distance > 1 && distance < 60)
         {
             transform.LookAt(new Vector3(gandalf.transform.position.x,transform.position.y,gandalf.transform.position.z));
             rb.MovePosition(transform.position+transform.forward);

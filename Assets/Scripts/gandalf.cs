@@ -35,13 +35,17 @@ public class gandalf : MonoBehaviour
     void animations()
     { 
         anim.SetBool("forward",input_z>0 && !light_ball_boolean);
+        anim.SetBool("back",input_z<0 && !light_ball_boolean);
     }
 
     void movement()
     { 
         Inputs();
         
-        if(!light_ball_boolean) move_dir = transform.right * input_x + transform.forward * input_z;
+        if(light_ball_boolean || fire_ball_boolean)
+            return;
+        
+        move_dir = transform.right * input_x + transform.forward * input_z;
         rb.MovePosition(rb.position+move_dir*speed);
     }
 
