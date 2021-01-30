@@ -26,6 +26,9 @@ public class main_camera : MonoBehaviour
         xRotation= Mathf.Clamp(xRotation, -90f,90f);
 
         transform.localRotation= Quaternion.Euler(xRotation,0f,0f); 
-        if(playerBody!=null) playerBody.Rotate(Vector3.up*mouseX); 
+        if(playerBody!=null) playerBody.Rotate(Vector3.up*mouseX);
+
+        if (Input.GetKeyUp(KeyCode.LeftAlt)) Cursor.lockState = CursorLockMode.Locked;
+        if (Input.GetKeyUp(KeyCode.AltGr)) Cursor.lockState = CursorLockMode.Confined;
     } 
 }
