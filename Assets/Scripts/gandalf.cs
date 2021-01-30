@@ -41,12 +41,16 @@ public class gandalf : MonoBehaviour
     { 
         Inputs();
         
-        move_dir = transform.right * input_x + transform.forward * input_z;
+        if(!light_ball_boolean) move_dir = transform.right * input_x + transform.forward * input_z;
         rb.MovePosition(rb.position+move_dir*speed);
     }
 
     bool light_ball_boolean;
+    bool fire_ball_boolean;
+    
     public GameObject light_spell;
+    public GameObject fire_ball_spell;
+
     public Transform spell_spawn;
     
     void Inputs()
@@ -60,20 +64,27 @@ public class gandalf : MonoBehaviour
             anim.SetTrigger("spell_0");
             light_ball_boolean = true; 
         } 
+        
+        if (Input.GetKeyUp(KeyCode.Mouse1))
+        {
+            anim.SetTrigger("spell_0");
+            fire_ball_boolean = true; 
+        } 
     }
 
-    public void lightball()
+    public void shoot()
     {
-        RaycastHit ray; 
+        RaycastHit hit; 
 
-        if (Physics.Raycast(spell_spawn.position, Camera.main.transform.TransformDirection(Camera.main.transform.forward), out ray))
-        {
-            //if(ray.collider==null) light_spell.transform.rotation = ray.transform.rotation; 
+        if(Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out hit))
+        { 
+            if(light_ball_boolean) Instantiate(light_spell, spell_spawn.position, Quaternion.LookRotation(Camera.main.transform.forward));
+            if(fire_ball_boolean) Instantiate(fire_ball_spell, spell_spawn.position, Quaternion.LookRotation(Camera.main.transform.forward)); 
             
-            GameObject light_spell_copy = Instantiate(light_spell, spell_spawn.position, Quaternion.identity);
-            if(ray.transform != null) light_spell.GetComponent<light_spell>().target = ray.point;
+            global::light_spell.target = hit.transform.position;
             
             light_ball_boolean = false;
+            fire_ball_boolean = false;
         }
     }
 }

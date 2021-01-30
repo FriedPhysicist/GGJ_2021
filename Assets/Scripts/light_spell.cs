@@ -1,13 +1,22 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class light_spell : MonoBehaviour
 {
-    public Vector3 target;
+    static public Vector3 target;
     
     void Update()
     {
-        transform.position = Vector3.MoveTowards(transform.position,target,0.5f);
+        transform.position += transform.forward*2;
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Finish"))
+        {
+            Destroy(gameObject);
+        }
     }
 }
