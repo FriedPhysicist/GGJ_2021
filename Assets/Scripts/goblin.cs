@@ -8,6 +8,8 @@ public class goblin : MonoBehaviour
     private Rigidbody rb;
     private Animator anim;
     private GameObject gandalf;
+    private AudioSource _as;
+    [SerializeField] private AudioClip[] _ac;
 
     private bool death=false;
     
@@ -15,6 +17,7 @@ public class goblin : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
+        _as = GetComponent<AudioSource>();
     }
 
     
@@ -46,7 +49,14 @@ public class goblin : MonoBehaviour
         if (other.CompareTag("goblin"))
         { 
             death = true;
+            sfx_play(0);
             anim.SetBool("death", true);
         }
+    }
+    
+    void sfx_play(int clip_number)
+    {
+        _as.clip = _ac[clip_number];
+        _as.Play();
     }
 }

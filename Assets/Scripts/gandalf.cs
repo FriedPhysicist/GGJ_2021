@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 public class gandalf : MonoBehaviour
@@ -84,11 +85,23 @@ public class gandalf : MonoBehaviour
         { 
             if(light_ball_boolean) Instantiate(light_spell, spell_spawn.position, Quaternion.LookRotation(Camera.main.transform.forward));
             if(fire_ball_boolean) Instantiate(fire_ball_spell, spell_spawn.position, Quaternion.LookRotation(Camera.main.transform.forward)); 
+            sfx_play(0);
             
             global::light_spell.target = hit.transform.position;
             
             light_ball_boolean = false;
             fire_ball_boolean = false;
         }
+    }
+
+    void step_sound()
+    {
+        sfx_play(1);
+    } 
+    
+    void sfx_play(int clip_number)
+    {
+        _as.clip = _ac[clip_number];
+        _as.Play();
     }
 }
