@@ -1,13 +1,14 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using UnityEditor.Build.Reporting;
 using UnityEngine;
 
 public class gandalf : MonoBehaviour
-{
+{ 
     Animator anim;
     Rigidbody rb;
     AudioSource _as;
+    public AudioSource music;
 
     private float input_z;
     private float input_x;
@@ -21,11 +22,15 @@ public class gandalf : MonoBehaviour
         anim = GetComponent<Animator>();
         rb=GetComponent<Rigidbody>();
         _as=GetComponent<AudioSource>(); 
-    } 
-    
+    }
+
+    private bool prot = false;
     void Update()
     { 
         animations(); 
+        power_up.SetActive(ring_.ring_taken);
+
+        music_play();
     }
 
     void FixedUpdate()
@@ -33,6 +38,40 @@ public class gandalf : MonoBehaviour
         movement();
     }
 
+    void music_play()
+    { 
+        if (!ring_.ring_taken)
+        {
+            if(!music.isPlaying) music.clip = _ac[2];
+        }
+        
+        if (ring_.ring_taken && !golem.death)
+        {
+            music.clip = _ac[3];
+
+            if (!prot)
+            { 
+                music.Stop();
+                prot = true;
+            }
+            
+            if(!music.isPlaying) music.Play();
+        }
+        
+        if (ring_.ring_taken && golem.death)
+        {
+            music.clip = _ac[2];
+
+            if (prot)
+            { 
+                music.Stop();
+                prot = false;
+            }
+            
+            if(!music.isPlaying) music.Play();
+        } 
+    }
+    
     void animations()
     { 
         anim.SetBool("forward",input_z>0 && !light_ball_boolean);
@@ -55,6 +94,7 @@ public class gandalf : MonoBehaviour
     
     public GameObject light_spell;
     public GameObject fire_ball_spell;
+    public GameObject power_up;
 
     public Transform spell_spawn;
     
