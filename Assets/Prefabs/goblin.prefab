@@ -158,6 +158,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _ac:
   - {fileID: 8300000, guid: 8d710b994f0d4054b9021c4667f260c5, type: 3}
+  - {fileID: 8300000, guid: e0f23a6664443f142bf3fd72f100d61a, type: 3}
 --- !u!1001 &8104999153023253585
 PrefabInstance:
   m_ObjectHideFlags: 0

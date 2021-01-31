@@ -12,7 +12,8 @@ public class light_spell : MonoBehaviour
     {
         if (!rot_prot)
         { 
-            transform.rotation*=Quaternion.Euler(4,0,0);
+            transform.rotation*=Quaternion.Euler(-4,1,1);
+            rot_prot = true;
         }
         
         transform.position += transform.forward*2;
